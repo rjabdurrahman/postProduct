@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    <title>Web UPload</title>
+</head>
+
+<body>
+    <button onclick="runquery()">Query</button>
+    <div id="note" style="display: none;">
+        <p>Data Found</p>
+        <p id="data"></p>
+    </div>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCIaJkhvdBRYlkygCnJe5ske9RRyEfUTu0",
+            authDomain: "assist-207020.firebaseapp.com",
+            databaseURL: "https://assist-207020.firebaseio.com",
+            projectId: "assist-207020",
+            storageBucket: "assist-207020.appspot.com",
+            messagingSenderId: "52457583966"
+        };
+        firebase.initializeApp(config);
+        const db = firebase.database().ref();
+        function runquery() {
+            var query = db.child('Merchants').orderByChild('pos_token_status').equalTo('ACTIVE');
+            query.on('value', function (snapshot) {
+                document.getElementById('note').style.display = "block";
+                document.getElementById('note').innerHTML = JSON.stringify(snapshot.val());
+                console.log(snapshot.val());
+            });
+        }
+        // console.log(arr);
+
+        // db.child('Reports_copy').set(arr);
+    </script>
+</body>
+
+</html>
